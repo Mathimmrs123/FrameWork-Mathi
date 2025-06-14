@@ -545,9 +545,7 @@ public class BaseClass {
 
 	}
 	
-	public void quite() {
 
-		driver.quit();
-	}
+	
 
 }
