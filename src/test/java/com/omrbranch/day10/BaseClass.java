@@ -1,4 +1,5 @@
 package com.omrbranch.day10;
+import java.awt.desktop.QuitEvent;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -535,6 +536,18 @@ public class BaseClass {
 	public List<WebElement> findLocatorsByXpath(String xpathExp) {
 		List<WebElement> elements = driver.findElements(By.xpath(xpathExp));
 		return elements;
+	}
+
+	public Alert clickAlert1() {
+		Alert alert = driver.switchTo().alert();
+		alert.accept();
+		return alert;
+
+	}
+	
+	public void quite() {
+
+		driver.quit();
 	}
 
 }
