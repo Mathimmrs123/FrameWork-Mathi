@@ -167,7 +167,13 @@ public static void main(String[] args) throws IOException, InterruptedException 
 	Thread.sleep(2000);
 	OmrGroceryTask1 project = new OmrGroceryTask1();
 	project.creatorderId();
+
 	
+}
+
+public void quite() {
+
+	driver.quit();
 }
 
 }
