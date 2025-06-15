@@ -150,12 +150,12 @@ public class BaseClass {
 	}
 
 //Q7
-	public void elementSendKeys(WebElement element, String data) {
+	public void elementSendKeys(WebElement element, Object object) {
 		visibilityOfElement(element);
 
 		if (elementIsDisplayed(element) && elementIsEnabled(element)) {
 
-			element.sendKeys(data);
+			element.sendKeys((CharSequence[]) object);
 		}
 	}
 

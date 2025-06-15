@@ -1,5 +1,12 @@
 package com.omrbranch.day18;
 
+import java.awt.AWTException;
+import java.io.IOException;
+import java.util.Properties;
+
+import org.junit.Assert;
+import org.openqa.selenium.By;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -46,5 +53,99 @@ public class LoginPage2 extends BaseClass {
 		return clkresetbutt;
 	}
 
+	
 
+	private Object excelData(int i, int j) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void forgetpasswordinvalid() throws InterruptedException {
+		Thread.sleep(2000);
+		elementClick(getClkforgetpass());
+		implicitWait(2);
+		driver.findElement(By.id("email")).sendKeys("dnednejdn@gmail.com");
+		elementClick(getClkresetbutt());
+		implicitWait(5);
+		WebElement g = driver
+				.findElement(By.xpath("//div[contains(text(),' Could not send password reset link to email! ')]"));
+		String actualText = g.getText();
+		String expectedText = "Could not send password reset link to email!";
+
+		try {
+			Assert.assertEquals(expectedText, actualText);
+			// assertTextEquals1(expectedText, actualText);
+
+		} catch (AssertionError e) {
+			System.out.println("Assertion failed: " + e.getMessage());
+
+			// EmailNotificationManager.addMessage("The \"Forget password\" text is not
+			// visible in Japanese.",false);
+		}
+		driver.findElement(By.id("email")).clear();
+	}
+
+	public void forgetpassvalid() throws InterruptedException {
+
+		Thread.sleep(2000);
+		driver.findElement(By.id("email")).sendKeys("rajan@movingwalls.com");
+		elementClick(getClkresetbutt());
+		implicitWait(10);
+
+		WebElement g = driver.findElement(By.xpath(
+				"//div[contains(text(),'Check your email for a link to reset your password. If it doesn’t appear within a few minutes, check your spam folder.')]"));
+		String actualText = g.getText();
+		String expectedText = "Check your email for a link to reset your password. If it doesn’t appear within a few minutes, check your spam folder.";
+
+		try {
+			Assert.assertEquals(expectedText, actualText);
+			// assertTextEquals1(expectedText, actualText);
+
+		} catch (AssertionError e) {
+			System.out.println("Assertion failed: " + e.getMessage());
+
+			// EmailNotificationManager.addMessage("The \"Forget password\" text is not
+			// visible in Japanese.",false);
+		}
+	}
+ 
+	
+//	public void Login(String user, String pass) throws InterruptedException, AWTException, IOException {
+//
+//		
+//		implicitWait(50);
+//		sendKeys(getSnduser(), excelData(2, 1));
+//		sendKeys(getSndpass(), excelData(3, 1));
+//		Thread.sleep(2000);
+//		elementClick(getClklog());
+//		
+//	}
+
+	public void successmsg() throws InterruptedException, IOException {
+		 
+		String filepath = "Results.property";
+		 
+		Thread.sleep(1000);
+		
+		long start = System.currentTimeMillis();
+		//elementClick(getClklog());
+		implicitWait(10);
+		driver.findElement(By.xpath("//a[@class='lmx-sec']")).isDisplayed();
+		long finish = System.currentTimeMillis();
+		long totalTime = (finish - start);
+		System.out.println("Total Time for page load - " + totalTime + " milliseconds");
+		 
+		WebElement g = driver.findElement(By.xpath("//div[contains(text(),' Logged in successfully. ')]"));
+		String actualText = g.getText();
+		String expectedText = "Logged in successfully.";
+		 
+		Properties props = new Properties();
+	
+		org.testng.Assert.assertEquals(expectedText, actualText);
+		
+		
+		
+		
+	}
+		
 }
