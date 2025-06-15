@@ -1,5 +1,13 @@
 package com.omrbranch.day18;
 
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+
+import javax.imageio.ImageIO;
+
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -46,5 +54,59 @@ public class LoginPage2 extends BaseClass {
 		return clkresetbutt;
 	}
 
+	public void faviconicon() throws InterruptedException {
+
+		WebElement faviconElement = driver.findElement(By.cssSelector("link[rel='icon']"));
+
+		// Extract the URL of the favicon
+		String faviconUrl = faviconElement.getAttribute("href");
+
+		// Download the favicon image
+		BufferedImage faviconImage = null;
+		try {
+			faviconImage = ImageIO.read(new URL(faviconUrl));
+			System.out.println(faviconUrl);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		// Load expected favicon image
+		BufferedImage expectedImage = null;
+		try {
+
+			InputStream imageStream = getClass().getClassLoader().getResourceAsStream("Testdata/Favi_lmx.png");
+			expectedImage = ImageIO.read(imageStream);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		// Compare favicon image with expected image
+		if (compareImages(faviconImage, expectedImage)) {
+			System.out.println("Favicon is correct!");
+		} else {
+			System.out.println("Favicon is incorrect!");
+		}
+
+	}
+
+	// Method to compare two images
+	private static boolean compareImages(BufferedImage img1, BufferedImage img2) {
+		if (img1 == null || img2 == null) {
+			return false;
+		}
+
+		if (img1.getWidth() != img2.getWidth() || img1.getHeight() != img2.getHeight()) {
+			return false;
+		}
+
+		for (int y = 0; y < img1.getHeight(); y++) {
+			for (int x = 0; x < img1.getWidth(); x++) {
+				if (img1.getRGB(x, y) != img2.getRGB(x, y)) {
+					return false;
+				}
+			}
+		}
+		return true;
+	}
 
 }
